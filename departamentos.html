@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script>
+        if (localStorage.getItem("unova_sesion_activa") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departamentos | Universidad NovaTech del Valle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root { --bg-main: #fcf8f2; --green-ghibli: #2c5339; --green-light: #4a7c59; --terracotta: #9b3e22; --wood-dark: #1b2822; --border-soft: #d3cdbf; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-main); color: var(--wood-dark); min-height: 100vh; }
+        header { background: var(--wood-dark); border-bottom: 2px solid var(--green-ghibli); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .contenedor-header { max-width: 1350px; margin: auto; display: flex; align-items: center; justify-content: space-between; height: 75px; padding: 0 20px; }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-icono { width: 42px; height: 42px; background: var(--green-ghibli); color: white; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 20px; }
+        .logo-texto h1 { font-size: 18px; color: white; }
+        .logo-texto span { font-size: 11px; color: #a3b8af; }
+        nav { display: flex; align-items: center; gap: 10px; }
+        nav a { color: white; text-decoration: none; font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 6px; }
+        nav a:hover, nav a.activo { color: #ffe599; background: rgba(255,255,255,0.05); }
+        .btn-salir { background: var(--terracotta) !important; color: white !important; }
+        main { max-width: 1350px; margin: 95px auto 40px auto; padding: 0 20px; }
+        .dashboard-tabs { display: flex; gap: 12px; margin-bottom: 25px; flex-wrap: wrap; border-bottom: 1px solid var(--border-soft); padding-bottom: 15px; }
+        .tab-btn { background: #f7f3ec; border: 1px solid var(--border-soft); color: var(--wood-dark); padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; text-decoration: none; }
+        .tab-btn.activo, .tab-btn:hover { background: var(--green-ghibli); color: white; border-color: var(--green-ghibli); }
+        .tabla-contenedor { background: white; border-radius: 12px; border: 1px solid var(--border-soft); overflow-x: auto; box-shadow: 0 8px 25px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; white-space: nowrap; }
+        th { background: var(--green-ghibli); color: white; padding: 14px 15px; font-weight: 700; border-bottom: 2px solid var(--border-soft); }
+        td { padding: 13px 15px; border-bottom: 1px solid var(--border-soft); color: #333; }
+        tr:hover { background: #f7f3ec; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="contenedor-header">
+            <div class="logo">
+                <div class="logo-icono"><i class="fa-solid fa-tree"></i></div>
+                <div class="logo-texto"><h1>UNOVA</h1><span>Universidad NovaTech del Valle</span></div>
+            </div>
+            <nav id="menu">
+                <a href="index.html">Inicio</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="menu.html">Menú</a>
+                <a href="inventario.html" class="activo">Inventario</a>
+                <a href="#" id="btnCerrarSesion" class="btn-salir"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="dashboard-tabs">
+            <a href="inventario.html" class="tab-btn"><i class="fa-solid fa-computer"></i> Equipos y Cómputo</a>
+            <a href="mobiliario.html" class="tab-btn"><i class="fa-solid fa-chair"></i> Mobiliario y Aulas</a>
+            <a href="departamentos.html" class="tab-btn activo"><i class="fa-solid fa-building-columns"></i> Departamentos</a>
+            <a href="proveedores.html" class="tab-btn"><i class="fa-solid fa-truck"></i> Proveedores</a>
+        </div>
+        <h2 style="color: var(--wood-dark); margin-bottom: 20px;">DIRECTORIO DE DEPARTAMENTOS Y RECURSOS</h2>
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr><th>CÓDIGO DEPTO</th><th>DEPARTAMENTO</th><th>ENCARGADO</th><th>UBICACIÓN</th><th>TOTAL BIENES</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>DEP-SYS</strong></td><td>Sistemas y Cómputo</td><td>Ing. Arif</td><td>Centro de Cómputo</td><td>45 Asignados</td></tr>
+                    <tr><td><strong>DEP-ADM</strong></td><td>Dirección Administrativa</td><td>Lic. María Ramos</td><td>Edificio B</td><td>13 Asignados</td></tr>
+                    <tr><td><strong>DEP-BIB</strong></td><td>Biblioteca Central</td><td>Mtro. Juan Pérez</td><td>Biblioteca</td><td>10 Asignados</td></tr>
+                    <tr><td><strong>DEP-CES</strong></td><td>Control Escolar</td><td>Lic. Laura Gómez</td><td>Edificio C</td><td>18 Asignados</td></tr>
+                    <tr><td><strong>DEP-RHU</strong></td><td>Recursos Humanos</td><td>Mtra. Sofia Castro</td><td>Edificio B (Piso 2)</td><td>12 Asignados</td></tr>
+                    <tr><td><strong>DEP-FIN</strong></td><td>Finanzas y Contabilidad</td><td>C.P. Carlos Mendoza</td><td>Edificio B (Piso 1)</td><td>15 Asignados</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $('#btnCerrarSesion').click(function(e) {
+            e.preventDefault();
+            localStorage.removeItem("unova_sesion_activa");
+            window.location.href = "login.html";
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Reservaciones y Usuario | Universidad NovaTech del Valle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #fcf8f2;
+            --green-ghibli: #2c5339;
+            --terracotta: #9b3e22;
+            --wood-dark: #1b2822;
+            --border-soft: #d3cdbf;
+            --accent-gold: #c69214;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--wood-dark);
+            color: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 30px 20px;
+        }
+
+        .header-cliente {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        h1 {
+            font-size: clamp(26px, 4vw, 42px);
+            font-weight: 700;
+            color: #ffe599;
+            margin-bottom: 6px;
+        }
+        p.subtitulo {
+            color: #a3b8af;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Contenedor principal de la tarjeta de reservación (inspirado en las imágenes de referencia con bordes dorados / acentos cálidos) */
+        .card-reservacion {
+            background: #23342c;
+            border: 2px solid var(--accent-gold);
+            width: 100%;
+            max-width: 520px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        .card-reservacion h2 {
+            text-align: center;
+            color: #ffe599;
+            font-size: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .campo-form {
+            margin-bottom: 15px;
+        }
+        .campo-form label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #d3cdbf;
+            margin-bottom: 5px;
+        }
+        .campo-form input, .campo-form select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-soft);
+            background: #fcf8f2;
+            color: var(--wood-dark);
+            font-size: 13px;
+            outline: none;
+        }
+
+        .btn-agendar {
+            width: 100%;
+            background: var(--accent-gold);
+            color: var(--wood-dark);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-agendar:hover {
+            background: #d4a017;
+            color: #ffffff;
+        }
+
+        .aviso-privacidad {
+            font-size: 10px;
+            color: #a3b8af;
+            text-align: center;
+            margin-top: 15px;
+            line-height: 1.4;
+        }
+        .aviso-privacidad a {
+            color: #ffe599;
+            text-decoration: underline;
+        }
+
+        /* Acciones inferiores (Cerrar sesión / Descargar PDF) */
+        .acciones-inferiores {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+        .btn-accion {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+        .btn-cerrar { background: var(--terracotta); color: white; }
+        .btn-cerrar:hover { background: #b84726; }
+        .btn-pdf { background: #4a7c59; color: white; }
+        .btn-pdf:hover { background: var(--green-ghibli); }
+    </style>
+</head>
+<body>
+
+    <div class="header-cliente">
+        <h1 id="saludoBienvenida">¡Bienvenido!</h1>
+        <p class="subtitulo"><i class="fa-solid fa-tree"></i> Universidad NovaTech del Valle - Portal de Reservaciones</p>
+    </div>
+
+    <!-- Módulo de Agendar Reservación inspirado en la interfaz solicitada -->
+    <div class="card-reservacion">
+        <h2>AGENDAR RESERVACIÓN / CITA</h2>
+        <form id="formReservacion">
+            <div class="campo-form">
+                <label>Nombre de la Reservación:</label>
+                <input type="text" id="nombreReserva" placeholder="Ej. Sala de Cómputo / Auditorio" required>
+            </div>
+            <div class="campo-form">
+                <label>Número de Mesa / Espacio:</label>
+                <select id="numMesa" required>
+                    <option value="">Selecciona un espacio...</option>
+                    <option value="Laboratorio 1 (Edif. A)">Laboratorio 1 (Edif. A)</option>
+                    <option value="Sala de Juntas (Edif. B)">Sala de Juntas Principal (Edif. B)</option>
+                    <option value="Cubículo Biblioteca 01">Cubículo Biblioteca 01</option>
+                    <option value="Auditorio General">Auditorio General</option>
+                </select>
+            </div>
+            <div class="campo-form">
+                <label>Día:</label>
+                <input type="date" id="diaReserva" required>
+            </div>
+            <div class="campo-form">
+                <label>Horario:</label>
+                <select id="horarioReserva" required>
+                    <option value="">Selecciona un horario...</option>
+                    <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
+                    <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
+                    <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+                    <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-agendar">AGENDAR CITA</button>
+            <div class="aviso-privacidad">
+                <i class="fa-solid fa-shield-halved"></i> Aviso de Privacidad: Tus datos personales recopilados serán utilizados exclusivamente para gestionar tu reservación en la Universidad NovaTech del Valle. <a href="#">Consulta nuestro Aviso de Privacidad Completo</a>.
+            </div>
+        </form>
+    </div>
+
+    <div class="acciones-inferiores">
+        <button type="button" id="btnDescargarPDF" class="btn-accion btn-pdf">
+            <i class="fa-solid fa-file-pdf"></i> Descargar PDF
+        </button>
+        <a href="#" id="btnCerrarSesion" class="btn-accion btn-cerrar">
+            <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+        </a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        // Validar seguridad de sesión
+        if (localStorage.getItem("unova_sesion_activa") !== "true") {
+            window.location.href = "login.html";
+        }
+
+        // Diccionario oficial de los 14 integrantes del organigrama institucional de UNOVA
+        const nombresOrganigrama = {
+            "marcos@unova.edu.mx": "Marcos Arif Hernandez Ostos",
+            "nicolas@unova.edu.mx": "Nicolas Giles",
+            "roman@unova.edu.mx": "Roman Ocampo Gutierrez",
+            "azzeneth@unova.edu.mx": "Azzeneth Stephania Garcia Garcia",
+            "eduardo@unova.edu.mx": "Eduardo Garcia",
+            "luis@unova.edu.mx": "Luis Joaquin",
+            "eros@unova.edu.mx": "Eros Ramses",
+            "enrique@unova.edu.mx": "Abraham Enrique",
+            "eder@unova.edu.mx": "Eder Alyarimi",
+            "juan@unova.edu.mx": "Juan Ocampo",
+            "ismael@unova.edu.mx": "Ismael Flores",
+            "carmen@unova.edu.mx": "Carmen Barajas",
+            "angel@unova.edu.mx": "Angel",
+            "maria@unova.edu.mx": "Maria Fernanda",
+            "cliente": "Estimado Usuario",
+            "admin": "Administrador General"
+        };
+
+        $(document).ready(function() {
+            let usuarioActual = localStorage.getItem("unova_usuario_actual") || "";
+            let nombreMostrado = nombresOrganigrama[usuarioActual];
+
+            // Si se registró mediante el panel flotante, buscar su nombre guardado
+            if (!nombreMostrado) {
+                let listaRegistrados = JSON.parse(localStorage.getItem("unova_usuarios_registrados")) || [];
+                let regEncontrado = listaRegistrados.find(u => u.correo === usuarioActual);
+                if (regEncontrado) {
+                    nombreMostrado = regEncontrado.nombre;
+                } else {
+                    nombreMostrado = usuarioActual || "Invitado";
+                }
+            }
+
+            // Desplegar saludo personalizado con el nombre correspondiente
+            $('#saludoBienvenida').text(`¡Bienvenido, ${nombreMostrado}!`);
+
+            // Simular acción del botón agendar cita
+            $('#formReservacion').submit(function(e) {
+                e.preventDefault();
+                alert(`¡Reservación agendada con éxito para ${nombreMostrado} en ${$('#numMesa').val()}!`);
+                this.reset();
+            });
+
+            // Simular descarga de PDF como en la interfaz de referencia
+            $('#btnDescargarPDF').click(function() {
+                alert("Generando comprobante PDF de reservación institucional...");
+            });
+
+            // Cerrar sesión
+            $('#btnCerrarSesion').click(function(e) {
+                e.preventDefault();
+                localStorage.removeItem("unova_sesion_activa");
+                localStorage.removeItem("unova_usuario_actual");
+                localStorage.removeItem("unova_rol");
+                window.location.href = "login.html";
+            });
+        });
+    </script>
+</body>
+</html>
